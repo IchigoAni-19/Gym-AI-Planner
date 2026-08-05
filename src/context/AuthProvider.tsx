@@ -48,7 +48,18 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const result = await authClient.getSession();
         if (result && result.data?.user) {
-          const sessionUser = { id: result.data.user.id };
+          const rawUser = result.data.user as unknown as {
+            id: string;
+            email?: string | null;
+            name?: string | null;
+            avatarUrl?: string | null;
+          };
+          const sessionUser: AuthUser = {
+            id: rawUser.id,
+            email: rawUser.email ?? null,
+            name: rawUser.name ?? null,
+            avatarUrl: rawUser.avatarUrl ?? null,
+          };
           setNeonUser(sessionUser);
           await refreshData(sessionUser);
         } else {
@@ -87,6 +98,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     await refreshData(neonUser);
   }
 
+  async function signOut() {
+    await authClient.signOut();
+    setNeonUser(null);
+    setPlan(null);
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -95,6 +112,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         isLoading,
         saveProfile,
         generatePlan,
+        signOut,
         refreshData: async () => await refreshData(neonUser),
       }}
     >

@@ -4,7 +4,7 @@ import { Select } from "../components/ui/Select";
 import { useState } from "react";
 import { Textarea } from "../components/ui/Textarea";
 import { Button } from "../components/ui/Button";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { UserProfile } from "../types";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
@@ -70,9 +70,10 @@ export default function Onboarding() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
-  async function handleQuestionnaire(e: React.SubmitEvent) {
+  async function handleQuestionnaire(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
+    setIsGenerating(true);
 
     const profile: Omit<UserProfile, "userId" | "updatedAt"> = {
       goal: formData.goal as UserProfile["goal"],
@@ -83,24 +84,15 @@ export default function Onboarding() {
       injuries: formData.injuries || undefined,
       preferredSplit: formData.preferredSplit as UserProfile["preferredSplit"],
     };
-    try {
-      await saveProfile(profile);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to save profile",
-      );
-      return;
-    }
 
     try {
-      setIsGenerating(true);
+      await saveProfile(profile);
       await generatePlan();
       navigate("/profile");
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to generate training plan",
       );
-    } finally {
       setIsGenerating(false);
     }
   }
@@ -121,7 +113,7 @@ export default function Onboarding() {
               <h1 className="text-2xl font-bold mb-2">
                 Tell Us About Yourself
               </h1>
-              <p className="text-muted mb-6">
+              <p className="text-muted-foreground mb-6">
                 Help us create the perfect plan for you.
               </p>
               <form onSubmit={handleQuestionnaire} className="space-y-5">
@@ -197,10 +189,17 @@ export default function Onboarding() {
             </Card>
           ) : (
             <Card variant="bordered" className="text-center py-16">
-              <Loader2 className="w-12 h-12 text-accent mx-auto mb-6 animate-spin" />
+              <div
+                className="w-14 h-14 rounded-full mx-auto mb-6 animate-spin"
+                style={{
+                  border: "4px solid #a855f733",
+                  borderTopColor: "#a855f7",
+                  animationDuration: "0.7s",
+                  animationTimingFunction: "linear",
+                }}
+              />
               <h1 className="text-2xl font-bold mb-2">Creating your Plan</h1>
-              <p className="text-muted">
-                {" "}
+              <p className="text-muted-foreground">
                 Our AI is building your personalized training program...
               </p>
             </Card>

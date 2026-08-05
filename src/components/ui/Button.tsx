@@ -11,12 +11,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium transition-colors rounded-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
+      "inline-flex items-center justify-center font-medium rounded-xl disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-all duration-300 ease-out";
 
     const variants = {
-      primary: "bg-accent text-accent-foreground hover:bg-accent-hover",
-      secondary: "bg-card text-foreground border border-border hover:bg-border",
-      ghost: "text-muted hover:text-foreground hover:bg-card",
+      primary:
+        "bg-accent text-accent-foreground hover:bg-[var(--color-accent-hover)] hover:-translate-y-0.5 shadow-md hover:shadow-lg active:translate-y-0",
+      secondary:
+        "bg-transparent text-foreground border border-border hover:border-accent hover:text-accent hover:bg-accent/10 hover:-translate-y-0.5",
+      ghost:
+        "bg-transparent text-foreground hover:text-accent hover:bg-accent/10",
     };
 
     const sizes = {

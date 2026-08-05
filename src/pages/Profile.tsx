@@ -38,7 +38,7 @@ export default function Profile() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-1">Your Training Plan</h1>
-            <p className="text-muted">
+            <p className="text-muted-foreground">
               Version {plan.version} • Created {formatDate(plan.createdAt)}
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function Profile() {
               <Target className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <p className="text-xs text-muted">Goal</p>
+              <p className="text-xs text-muted-foreground">Goal</p>
               <p className="font-medium text-sm">{plan.overview.goal}</p>
             </div>
           </Card>
@@ -68,7 +68,7 @@ export default function Profile() {
               <Calendar className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <p className="text-xs text-muted">Frequency</p>
+              <p className="text-xs text-muted-foreground">Frequency</p>
               <p className="font-medium text-sm">{plan.overview.frequency}</p>
             </div>
           </Card>
@@ -77,7 +77,7 @@ export default function Profile() {
               <Dumbbell className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <p className="text-xs text-muted">Split</p>
+              <p className="text-xs text-muted-foreground">Split</p>
               <p className="font-medium text-sm">{plan.overview.split}</p>
             </div>
           </Card>
@@ -86,7 +86,7 @@ export default function Profile() {
               <TrendingUp className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <p className="text-xs text-muted">Version</p>
+              <p className="text-xs text-muted-foreground">Version</p>
               <p className="font-medium text-sm">{plan.version}</p>
             </div>
           </Card>
@@ -95,7 +95,7 @@ export default function Profile() {
         {/* Plan notes */}
         <Card variant="bordered" className="mb-8">
           <h2 className="font-semibold text-lg mb-2">Program Notes</h2>
-          <p className="text-muted text-sm leading-relaxed">
+          <p className="text-muted-foreground text-sm leading-relaxed">
             {plan.overview.notes}
           </p>
         </Card>
@@ -106,7 +106,7 @@ export default function Profile() {
 
         <Card variant="bordered" className="mb-8">
           <h2 className="font-semibold text-lg mb-2">Progression Strategy</h2>
-          <p className="text-muted text-sm leading-relaxed">
+          <p className="text-muted-foreground text-sm leading-relaxed">
             {plan.progression}
           </p>
         </Card>

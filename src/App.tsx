@@ -1,15 +1,53 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import Onboarding from "./pages/Onboarding";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
 import Navbar from "./components/layout/Navbar";
-import { NeonAuthUIProvider } from "@neondatabase/neon-js/auth/react";
+import { NeonAuthUIProvider, useTheme as useNeonTheme } from "@neondatabase/neon-js/auth/react";
 import { authClient } from "./lib/auth";
 import AuthProvider from "./context/AuthProvider";
 import ThemeProvider from "./context/ThemeProvider";
 import { useThemeMode } from "./context/useThemeMode";
+import { useEffect } from "react";
+
+function ShellContent() {
+  const location = useLocation();
+  const isAuthPage = location.pathname.startsWith("/auth/");
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      {!isAuthPage && <Navbar />}
+      <main className="flex-1">
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/auth/:pathname" element={<Auth />} />
+          <Route path="/settings" element={<Account />} />
+          <Route path="/account/:pathname" element={<Account />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
+// Syncs our ThemeProvider state into the NeonAuth UI theme system.
+// Must be rendered inside NeonAuthUIProvider.
+function NeonThemeSync() {
+  const { theme } = useThemeMode();
+  const { setTheme } = useNeonTheme();
+  useEffect(() => {
+    setTheme(theme);
+  }, [theme, setTheme]);
+  return null;
+}
 
 function AppShell() {
   const { theme } = useThemeMode();
@@ -21,21 +59,10 @@ function AppShell() {
       social={{ providers: ["google"] }}
       redirectTo="/profile"
     >
+      <NeonThemeSync />
       <AuthProvider>
         <BrowserRouter>
-          <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1">
-              <Routes>
-                <Route index element={<Home />} />
-                <Route path="/onboarding" element={<Onboarding />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/auth/:pathname" element={<Auth />} />
-                <Route path="/settings" element={<Account />} />
-                <Route path="/account/:pathname" element={<Account />} />
-              </Routes>
-            </main>
-          </div>
+          <ShellContent />
         </BrowserRouter>
       </AuthProvider>
     </NeonAuthUIProvider>

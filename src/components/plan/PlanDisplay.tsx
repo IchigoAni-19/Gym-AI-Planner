@@ -13,13 +13,13 @@ function ExerciseRow({
     <tr className="border-b border-border last:border-0">
       <td className="py-3 pr-4">
         <div className="flex items-start gap-3">
-          <span className="text-xs text-muted w-5">
+          <span className="text-xs text-muted-foreground w-5">
             {index + 1}.
           </span>
           <div>
-            <p className="font-medium">{exercise.name}</p>
+            <p className="font-medium text-foreground">{exercise.name}</p>
             {exercise.notes && (
-              <p className="text-xs text-muted mt-0.5 flex items-center gap-1">
+              <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
                 <Info className="w-3 h-3" />
                 {exercise.notes}
               </p>
@@ -32,12 +32,12 @@ function ExerciseRow({
         <span className="text-accent font-medium">
           {exercise.sets}
         </span>
-        <span className="text-muted"> x </span>
-        <span>{exercise.reps}</span>
+        <span className="text-muted-foreground"> x </span>
+        <span className="text-foreground">{exercise.reps}</span>
       </td>
 
       <td className="py-3 px-4 text-center">
-        <span className="text-muted">{exercise.rest}</span>
+        <span className="text-muted-foreground">{exercise.rest}</span>
       </td>
       <td className="py-3 px-4 text-center">
         <span
@@ -62,10 +62,10 @@ function DayCard({ schedule }: { schedule: DaySchedule }) {
     <Card variant="bordered" className="overflow-hidden">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-lg">{schedule.day}</h3>
+          <h3 className="font-semibold text-lg text-foreground">{schedule.day}</h3>
           <p className="text-sm text-accent">{schedule.focus}</p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-muted">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Dumbbell className="w-4 h-4" />
           <span>{schedule.exercises.length} exercises</span>
         </div>
@@ -74,7 +74,7 @@ function DayCard({ schedule }: { schedule: DaySchedule }) {
       <div className="overflow-x-auto -mx-6 px-6">
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-muted text-xs uppercase tracking-wider">
+            <tr className="text-muted-foreground text-xs uppercase tracking-wider">
               <th className="text-left py-2 pr-4 font-medium">Exercise</th>
               <th className="py-2 px-4 font-medium">Sets x Reps</th>
               <th className="py-2 px-4 font-medium">Rest</th>

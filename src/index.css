@@ -13,61 +13,64 @@
 :root {
   --font-sans: "Geist", system-ui, sans-serif;
 
-  /* Light theme — cool neutral with electric-blue energy accent */
-  --background: #f6f8fc;
-  --foreground: #0b1220;
+  /* Light theme — white bg, purple accents, black text */
+  --background: #ffffff;
+  --foreground: #000000;
   --card: #ffffff;
-  --card-foreground: #0b1220;
+  --card-foreground: #000000;
   --popover: #ffffff;
-  --popover-foreground: #0b1220;
-  --primary: #2563eb;
+  --popover-foreground: #000000;
+  --primary: #8b5cf6;
   --primary-foreground: #ffffff;
-  --secondary: #eef2fb;
-  --secondary-foreground: #0b1220;
-  --muted: #eef2fb;
-  --muted-foreground: #5b6475;
-  --accent: #2563eb;
+  --secondary: #f5f3ff;
+  --secondary-foreground: #000000;
+  --muted: #f5f3ff;
+  --muted-foreground: #52525b;
+  --accent: #8b5cf6;
   --accent-foreground: #ffffff;
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: #dbe3f1;
-  --input: #dbe3f1;
-  --ring: #2563eb;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #8b5cf6;
   --radius: 0.75rem;
 
   /* App-only extras (not registered as Tailwind utilities) */
-  --color-accent-hover: #1d4ed8;
+  --color-accent-hover: #7c3aed;
   --color-success: #16a34a;
   --color-warning: #d97706;
   --color-error: #dc2626;
+  /* Explicit muted foreground so text-muted-foreground always resolves correctly */
+  --color-muted-foreground: #52525b;
 }
 
 :root.dark {
-  /* Dark theme — deep navy/charcoal with electric-cyan accent (no violet) */
-  --background: #060912;
-  --foreground: #eef2fb;
-  --card: #0e1320;
-  --card-foreground: #eef2fb;
-  --popover: #0e1320;
-  --popover-foreground: #eef2fb;
-  --primary: #38bdf8;
-  --primary-foreground: #04070d;
-  --secondary: #161d2e;
-  --secondary-foreground: #eef2fb;
-  --muted: #161d2e;
-  --muted-foreground: #8b96ad;
-  --accent: #38bdf8;
-  --accent-foreground: #04070d;
+  /* Dark theme — pure black bg, purple accents, white text */
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+  --primary: #a855f7;
+  --primary-foreground: #000000;
+  --secondary: #17082a;
+  --secondary-foreground: #ffffff;
+  --muted: #17082a;
+  --muted-foreground: #a1a1aa;
+  --accent: #a855f7;
+  --accent-foreground: #000000;
   --destructive: #f87171;
-  --destructive-foreground: #04070d;
-  --border: #1f2738;
-  --input: #1f2738;
-  --ring: #38bdf8;
+  --destructive-foreground: #000000;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #a855f7;
 
-  --color-accent-hover: #0ea5e9;
+  --color-accent-hover: #9333ea;
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-error: #f87171;
+  --color-muted-foreground: #a1a1aa;
 }
 
 @layer base {
@@ -85,19 +88,15 @@
     background:
       radial-gradient(
         60rem 60rem at 80% -10%,
-        color-mix(in oklab, var(--accent) 12%, transparent),
+        color-mix(in oklab, var(--accent) 15%, transparent),
         transparent 60%
       ),
       radial-gradient(
         50rem 50rem at 0% 20%,
-        color-mix(in oklab, var(--accent) 8%, transparent),
+        color-mix(in oklab, var(--accent) 10%, transparent),
         transparent 55%
       ),
-      linear-gradient(
-        180deg,
-        color-mix(in oklab, var(--background) 92%, white),
-        var(--background)
-      );
+      var(--background);
     background-attachment: fixed;
     transition:
       background-color 220ms ease,
@@ -259,7 +258,7 @@
     background: linear-gradient(
       110deg,
       var(--accent),
-      color-mix(in oklab, var(--accent) 40%, #22d3ee),
+      color-mix(in oklab, var(--accent) 50%, #f0abfc),
       var(--accent)
     );
     background-size: 200% auto;
@@ -301,12 +300,16 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
+    /* Only reduce non-infinite one-shot animations, never kill spinners */
+    .animate-fade-up,
+    .animate-fade-in,
+    .animate-scale-in,
+    .animate-float,
+    .animate-float-slow,
+    .animate-pulse-ring,
+    .animate-marquee {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
     }
     .reveal {
       opacity: 1;

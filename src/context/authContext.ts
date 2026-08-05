@@ -3,6 +3,9 @@ import type { TrainingPlan, UserProfile } from "../types";
 
 export interface AuthUser {
   id: string;
+  email?: string | null;
+  name?: string | null;
+  avatarUrl?: string | null;
 }
 
 export interface AuthContextType {
@@ -14,6 +17,7 @@ export interface AuthContextType {
   ) => Promise<void>;
   generatePlan: () => Promise<void>;
   refreshData: () => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
