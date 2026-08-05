@@ -1,91 +1,80 @@
 @import "tailwindcss";
 @import "@neondatabase/neon-js/ui/tailwind";
 
+/*
+ * We only set the BASE semantic tokens (--background, --foreground, --card,
+ * --primary, --accent, --border, etc.). The neon-js theme layer maps these
+ * into --neon-* and --color-* (via its @theme inline), which is what the
+ * Tailwind utilities (bg-accent, text-foreground, border-border, ...) read.
+ * Do NOT redefine --color-* here — that creates a circular reference and
+ * breaks every accent-colored element.
+ */
+
 :root {
   --font-sans: "Geist", system-ui, sans-serif;
 
   /* Light theme — cool neutral with electric-blue energy accent */
-  --color-background: #f6f8fc;
-  --color-foreground: #0b1220;
-  --color-muted: #5b6475;
-  --color-border: #dbe3f1;
-  --color-card: #ffffff;
-  --color-card-foreground: #0b1220;
-  --color-accent: #2563eb;
+  --background: #f6f8fc;
+  --foreground: #0b1220;
+  --card: #ffffff;
+  --card-foreground: #0b1220;
+  --popover: #ffffff;
+  --popover-foreground: #0b1220;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2fb;
+  --secondary-foreground: #0b1220;
+  --muted: #eef2fb;
+  --muted-foreground: #5b6475;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #dbe3f1;
+  --input: #dbe3f1;
+  --ring: #2563eb;
+  --radius: 0.75rem;
+
+  /* App-only extras (not registered as Tailwind utilities) */
   --color-accent-hover: #1d4ed8;
-  --color-accent-foreground: #ffffff;
-  --color-secondary: #eef2fb;
-  --color-secondary-foreground: #0b1220;
   --color-success: #16a34a;
   --color-warning: #d97706;
   --color-error: #dc2626;
-
-  /* neon-auth ui tokens map onto our palette */
-  --background: var(--color-background);
-  --foreground: var(--color-foreground);
-  --card: var(--color-card);
-  --card-foreground: var(--color-card-foreground);
-  --popover: var(--color-card);
-  --popover-foreground: var(--color-foreground);
-  --primary: var(--color-accent);
-  --primary-foreground: var(--color-accent-foreground);
-  --secondary: var(--color-secondary);
-  --secondary-foreground: var(--color-secondary-foreground);
-  --muted: var(--color-secondary);
-  --muted-foreground: var(--color-muted);
-  --accent: var(--color-secondary);
-  --accent-foreground: var(--color-secondary-foreground);
-  --destructive: var(--color-error);
-  --destructive-foreground: #ffffff;
-  --border: var(--color-border);
-  --input: var(--color-border);
-  --ring: var(--color-accent);
-  --radius: 0.75rem;
 }
 
 :root.dark {
   /* Dark theme — deep navy/charcoal with electric-cyan accent (no violet) */
-  --color-background: #060912;
-  --color-foreground: #eef2fb;
-  --color-muted: #8b96ad;
-  --color-border: #1f2738;
-  --color-card: #0e1320;
-  --color-card-foreground: #eef2fb;
-  --color-accent: #38bdf8;
+  --background: #060912;
+  --foreground: #eef2fb;
+  --card: #0e1320;
+  --card-foreground: #eef2fb;
+  --popover: #0e1320;
+  --popover-foreground: #eef2fb;
+  --primary: #38bdf8;
+  --primary-foreground: #04070d;
+  --secondary: #161d2e;
+  --secondary-foreground: #eef2fb;
+  --muted: #161d2e;
+  --muted-foreground: #8b96ad;
+  --accent: #38bdf8;
+  --accent-foreground: #04070d;
+  --destructive: #f87171;
+  --destructive-foreground: #04070d;
+  --border: #1f2738;
+  --input: #1f2738;
+  --ring: #38bdf8;
+
   --color-accent-hover: #0ea5e9;
-  --color-accent-foreground: #04070d;
-  --color-secondary: #161d2e;
-  --color-secondary-foreground: #eef2fb;
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-error: #f87171;
-
-  --background: var(--color-background);
-  --foreground: var(--color-foreground);
-  --card: var(--color-card);
-  --card-foreground: var(--color-card-foreground);
-  --popover: var(--color-card);
-  --popover-foreground: var(--color-foreground);
-  --primary: var(--color-accent);
-  --primary-foreground: var(--color-accent-foreground);
-  --secondary: var(--color-secondary);
-  --secondary-foreground: var(--color-secondary-foreground);
-  --muted: var(--color-secondary);
-  --muted-foreground: var(--color-muted);
-  --accent: var(--color-secondary);
-  --accent-foreground: var(--color-secondary-foreground);
-  --destructive: var(--color-error);
-  --destructive-foreground: #04070d;
-  --border: var(--color-border);
-  --input: var(--color-border);
-  --ring: var(--color-accent);
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
-    background-color: var(--color-background);
-    color: var(--color-foreground);
+    background-color: var(--background);
+    color: var(--foreground);
   }
 
   body {
@@ -96,18 +85,18 @@
     background:
       radial-gradient(
         60rem 60rem at 80% -10%,
-        color-mix(in oklab, var(--color-accent) 12%, transparent),
+        color-mix(in oklab, var(--accent) 12%, transparent),
         transparent 60%
       ),
       radial-gradient(
         50rem 50rem at 0% 20%,
-        color-mix(in oklab, var(--color-accent) 8%, transparent),
+        color-mix(in oklab, var(--accent) 8%, transparent),
         transparent 55%
       ),
       linear-gradient(
         180deg,
-        color-mix(in oklab, var(--color-background) 92%, white),
-        var(--color-background)
+        color-mix(in oklab, var(--background) 92%, white),
+        var(--background)
       );
     background-attachment: fixed;
     transition:
@@ -116,16 +105,10 @@
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-accent) 26%, transparent);
-    color: var(--color-foreground);
+    background: color-mix(in oklab, var(--accent) 26%, transparent);
+    color: var(--foreground);
   }
 
-  [data-slot="skeleton"],
-  .animate-pulse {
-    background-color: var(--color-border) !important;
-  }
-
-  /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -134,13 +117,13 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in oklab, var(--color-muted) 40%, transparent);
+    background: color-mix(in oklab, var(--muted-foreground) 40%, transparent);
     border-radius: 9999px;
     border: 2px solid transparent;
     background-clip: padding-box;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: color-mix(in oklab, var(--color-muted) 65%, transparent);
+    background: color-mix(in oklab, var(--muted-foreground) 65%, transparent);
     background-clip: padding-box;
   }
 }
@@ -215,12 +198,6 @@
     }
   }
 
-  @keyframes shimmer {
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
   @keyframes gradient-pan {
     0%,
     100% {
@@ -281,9 +258,9 @@
   .text-gradient {
     background: linear-gradient(
       110deg,
-      var(--color-accent),
-      color-mix(in oklab, var(--color-accent) 40%, #22d3ee),
-      var(--color-accent)
+      var(--accent),
+      color-mix(in oklab, var(--accent) 40%, #22d3ee),
+      var(--accent)
     );
     background-size: 200% auto;
     -webkit-background-clip: text;
@@ -296,12 +273,12 @@
     background-image:
       linear-gradient(
         to right,
-        color-mix(in oklab, var(--color-border) 60%, transparent) 1px,
+        color-mix(in oklab, var(--border) 60%, transparent) 1px,
         transparent 1px
       ),
       linear-gradient(
         to bottom,
-        color-mix(in oklab, var(--color-border) 60%, transparent) 1px,
+        color-mix(in oklab, var(--border) 60%, transparent) 1px,
         transparent 1px
       );
     background-size: 56px 56px;
@@ -319,8 +296,8 @@
 
   .shadow-glow {
     box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--color-accent) 20%, transparent),
-      0 10px 40px -12px color-mix(in oklab, var(--color-accent) 45%, transparent);
+      0 0 0 1px color-mix(in oklab, var(--accent) 20%, transparent),
+      0 10px 40px -12px color-mix(in oklab, var(--accent) 45%, transparent);
   }
 
   @media (prefers-reduced-motion: reduce) {
