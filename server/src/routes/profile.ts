@@ -1,5 +1,6 @@
 import { Router, type Request, type Response } from "express";
 import { prisma } from "../lib/prisma";
+import { isUuid } from "../lib/validation";
 
 export const profileRouter = Router();
 
@@ -9,6 +10,10 @@ profileRouter.post("/", async (req: Request, res: Response) => {
 
     if (!userId) {
       return res.status(400).json({ error: "User ID is required" });
+    }
+
+    if (!isUuid(userId)) {
+      return res.status(400).json({ error: "Invalid User ID format" });
     }
 
     const {

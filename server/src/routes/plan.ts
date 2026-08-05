@@ -3,6 +3,7 @@ import { prisma } from "../lib/prisma";
 import { generateTrainingPlan } from "../lib/ai";
 import type { Prisma } from "../../generated/prisma/client";
 import type { TrainingPlan } from "../../types";
+import { isUuid } from "../lib/validation";
 
 export const planRouter = Router();
 
@@ -12,6 +13,10 @@ planRouter.post("/generate", async (req: Request, res: Response) => {
 
     if (!userId) {
       return res.status(400).json({ error: "User ID is required" });
+    }
+
+    if (!isUuid(userId)) {
+      return res.status(400).json({ error: "Invalid User ID format" });
     }
 
     const profile = await prisma.user_profiles.findUnique({
@@ -51,7 +56,7 @@ planRouter.post("/generate", async (req: Request, res: Response) => {
     const newPlan = await prisma.training_plans.create({
       data: {
         user_id: userId,
-        plan_json: planJson as Prisma.InputJsonValue,
+        plan_json: planJson as unknown as Prisma.InputJsonValue,
         plan_text: planText,
         version: nextVersion,
       },
@@ -73,6 +78,10 @@ planRouter.get("/current", async (req: Request, res: Response) => {
     const userId = req.query.userId as string;
     if (!userId) {
       return res.status(400).json({ error: "User ID is required" });
+    }
+
+    if (!isUuid(userId)) {
+      return res.status(400).json({ error: "Invalid User ID format" });
     }
 
     const plan = await prisma.training_plans.findFirst({

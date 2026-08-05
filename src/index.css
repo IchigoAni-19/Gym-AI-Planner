@@ -1,16 +1,25 @@
 @import "tailwindcss";
 @import "@neondatabase/neon-js/ui/tailwind";
 
-@theme {
+:root {
   --font-sans: "Geist", system-ui, sans-serif;
+  --color-background: #f7f9ff;
+  --color-foreground: #0f172a;
+  --color-muted: #5b6475;
+  --color-border: #d7def0;
+  --color-card: #ffffff;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+}
 
-  --color-background: #0a0a0a;
-  --color-foreground: #fafafa;
-  --color-muted: #a1a1aa;
-  --color-border: #27272a;
-  --color-card: #18181b;
-  --color-accent: #a3e635;
-  --color-accent-hover: #84cc16;
+:root.dark {
+  --color-background: #05040a;
+  --color-foreground: #f5f3ff;
+  --color-muted: #b8b0d0;
+  --color-border: #2b243d;
+  --color-card: #11101a;
+  --color-accent: #c4b5fd;
+  --color-accent-hover: #a78bfa;
 }
 
 @layer base {
@@ -25,6 +34,17 @@
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background:
+      radial-gradient(circle at top left, color-mix(in oklab, var(--color-accent) 14%, transparent), transparent 34%),
+      linear-gradient(180deg, color-mix(in oklab, var(--color-background) 94%, white), var(--color-background));
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 26%, transparent);
+    color: var(--color-foreground);
   }
 
   /* Override Better Auth skeleton colors */
