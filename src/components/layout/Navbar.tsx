@@ -17,9 +17,14 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 text-foreground">
-          <Dumbbell className="w-6 h-6 text-accent" />
-          <span className="font-semibold text-lg">GymAI</span>
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-foreground group"
+        >
+          <span className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 group-hover:scale-110 transition-all duration-300">
+            <Dumbbell className="w-5 h-5 text-accent" />
+          </span>
+          <span className="font-semibold text-lg tracking-tight">GymAI</span>
         </Link>
 
         <nav className="flex items-center gap-2">
