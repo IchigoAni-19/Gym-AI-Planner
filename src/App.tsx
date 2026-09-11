@@ -1,8 +1,10 @@
 import {
   BrowserRouter,
+  Link as RouterLink,
   Route,
   Routes,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Onboarding from "./pages/Onboarding";
@@ -52,6 +54,7 @@ function NeonThemeSync() {
 
 function AppShell() {
   const { theme } = useThemeMode();
+  const navigate = useNavigate();
   const appOrigin = window.location.origin;
 
   return (
@@ -62,12 +65,17 @@ function AppShell() {
       basePath="/auth"
       social={{ providers: ["google"] }}
       redirectTo="/profile"
+      navigate={navigate}
+      replace={(to) => navigate(to, { replace: true })}
+      Link={({ href, className, children }) => (
+        <RouterLink to={href} className={className}>
+          {children}
+        </RouterLink>
+      )}
     >
       <NeonThemeSync />
       <AuthProvider>
-        <BrowserRouter>
-          <ShellContent />
-        </BrowserRouter>
+        <ShellContent />
       </AuthProvider>
     </NeonAuthUIProvider>
   );
@@ -76,7 +84,9 @@ function AppShell() {
 function App() {
   return (
     <ThemeProvider>
-      <AppShell />
+      <BrowserRouter>
+        <AppShell />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

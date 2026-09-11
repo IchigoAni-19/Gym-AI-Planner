@@ -12,6 +12,10 @@ RUN npm install
 # .dockerignore will exclude node_modules, dist, .env
 COPY . .
 
+# Neon Auth endpoint URL required at frontend build time
+ARG VITE_NEON_AUTH_URL="https://ep-spring-cake-az0sitbd.neonauth.c-3.ap-southeast-1.aws.neon.tech/neondb/auth"
+ENV VITE_NEON_AUTH_URL=$VITE_NEON_AUTH_URL
+
 # Build React app → /app/dist
 RUN npm run build
 
