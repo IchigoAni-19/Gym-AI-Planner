@@ -30,6 +30,7 @@ function ShellContent() {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auth/:pathname" element={<Auth />} />
+          <Route path="/auth/callback" element={<Auth />} />
           <Route path="/settings" element={<Account />} />
           <Route path="/account/:pathname" element={<Account />} />
         </Routes>
@@ -51,11 +52,14 @@ function NeonThemeSync() {
 
 function AppShell() {
   const { theme } = useThemeMode();
+  const appOrigin = window.location.origin;
 
   return (
     <NeonAuthUIProvider
       authClient={authClient}
       defaultTheme={theme}
+      baseURL={appOrigin}
+      basePath="/auth"
       social={{ providers: ["google"] }}
       redirectTo="/profile"
     >

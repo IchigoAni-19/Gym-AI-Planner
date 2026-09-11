@@ -21,6 +21,13 @@ app.use(express.json());
 //API Routes
 app.use("/api/profile", profileRouter);
 app.use("/api/plan", planRouter);
+app.get("/health", (_req, res) => {
+  res.json({ status: "ok" });
+});
+
+app.use("/api", (_req, res) => {
+  res.status(404).json({ error: "API endpoint not found" });
+});
 
 const frontendPath = path.join(__dirname, "../../public");
 app.use(express.static(frontendPath));
