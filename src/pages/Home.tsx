@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Zap,
   Target,
@@ -65,11 +65,7 @@ const steps = [
 ];
 
 export default function Home() {
-  const { user, isLoading } = useAuth();
-
-  if (!isLoading && user) {
-    return <Navigate to="/profile" replace />;
-  }
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -105,22 +101,41 @@ export default function Home() {
             tailored to your goals, experience, and schedule.
           </p>
 
-          <div
-            className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up"
-            style={{ animationDelay: "240ms" }}
-          >
-            <Link to="/auth/sign-up">
-              <Button size="lg" className="gap-2 group shadow-glow">
-                Get Started Free
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </Link>
-            <Link to="/auth/sign-in">
-              <Button variant="secondary" size="lg">
-                Sign In
-              </Button>
-            </Link>
-          </div>
+          {user ? (
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up"
+              style={{ animationDelay: "240ms" }}
+            >
+              <Link to="/profile">
+                <Button size="lg" className="gap-2 group shadow-glow">
+                  Go to My Plan
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+              <Link to="/onboarding">
+                <Button variant="secondary" size="lg">
+                  Update Preferences
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up"
+              style={{ animationDelay: "240ms" }}
+            >
+              <Link to="/auth/sign-up">
+                <Button size="lg" className="gap-2 group shadow-glow">
+                  Get Started Free
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+              <Link to="/auth/sign-in">
+                <Button variant="secondary" size="lg">
+                  Sign In
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
@@ -206,9 +221,9 @@ export default function Home() {
                 Answer a few questions and get a structured training program
                 you can actually follow — free.
               </p>
-              <Link to="/auth/sign-up" className="inline-block">
+              <Link to={user ? "/profile" : "/auth/sign-up"} className="inline-block">
                 <Button size="lg" className="gap-2 group shadow-glow">
-                  Build my plan
+                  {user ? "Go to My Plan" : "Build my plan"}
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>

@@ -49,20 +49,27 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link
-          to="/"
+        <a
+          href="/"
           className="flex items-center gap-2 text-foreground group"
+          title="Back to Home"
         >
           <span className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 group-hover:scale-110 transition-all duration-300">
             <Dumbbell className="w-5 h-5 text-accent" />
           </span>
           <span className="font-semibold text-lg tracking-tight">GymAI</span>
-        </Link>
+        </a>
 
         <nav className="flex items-center gap-3">
           <ThemeToggle />
           {user ? (
-            <div className="relative" ref={menuRef}>
+            <>
+              <Link to="/profile">
+                <Button variant="ghost" size="sm" className="hidden sm:inline-flex text-sm">
+                  My Plan
+                </Button>
+              </Link>
+              <div className="relative" ref={menuRef}>
               <Button
                 variant="secondary"
                 size="sm"
@@ -137,6 +144,7 @@ export default function Navbar() {
                 </div>
               )}
             </div>
+            </>
           ) : (
             <>
               <Link to="/auth/sign-in">
