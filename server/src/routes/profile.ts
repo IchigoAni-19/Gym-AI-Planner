@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
-import { prisma } from "../lib/prisma";
-import { isUuid } from "../lib/validation";
+import { prisma } from "../lib/prisma.js";
+import { isUuid } from "../lib/validation.js";
 
 export const profileRouter = Router();
 
