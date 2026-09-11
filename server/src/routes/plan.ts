@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
-import type { Prisma } from "../../generated/prisma/client";
-import type { TrainingPlan } from "../../types";
+import type { Prisma } from "../../generated/prisma/client.js";
+import type { TrainingPlan } from "../../types/index.js";
 import { prisma } from "../lib/prisma.js";
 import { generateTrainingPlan } from "../lib/ai.js";
 import { isUuid } from "../lib/validation.js";
